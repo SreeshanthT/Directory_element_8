@@ -1,0 +1,51 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}Manage Teacher {{teacher}}{% endblock %}
+{% block content %}
+<section class="bg-light" style="height:auto">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+            <div class="col-12">
+                <h2 class="text-center text-black font-alt mb-4">
+                    Manage Of Teachers in {{school}}
+                </h2>
+            </div>
+            <div class="card col-12">
+                <form action="">
+                    <div class="card-header-light p-5 text-center">
+                        <h1>Manage Teacher </h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for field in form %}
+                                <div class="col-6">
+                                    <div class="form-floating mb-3">
+                                        {{field}}
+                                        <label for="floatingInput">{{field.label}}</label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    
+                    </div>
+                    <div class="card-footer-light text-center p-3">
+                        <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" 
+                            type="submit">
+                            <span class="d-flex align-items-center">
+                                <span class="small">Submit</span>
+                                <i class="bi bi-file-earmark"></i>
+                            </span>
+                        </button>
+                        <button class="btn btn-light rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal" >
+                            <span class="d-flex align-items-center">
+                                <span class="small">Cancel</span>
+                                <i class="bi bi-x-square-fill"></i>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

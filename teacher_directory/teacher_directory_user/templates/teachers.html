@@ -1,0 +1,64 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}Teachers - {{school}}{% endblock %}
+{% block content %}
+<section class="bg-light" style="height: 100vh;">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+            <div class="col-12">
+                <h2 class="text-center text-black font-alt mb-4">List Of Teachers in {{school}}</h2>
+            </div>
+            <div class="card col-12">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-light add-teacher"
+                                data-action="{% url 'manage-teacher' school.slug 'add-teacher' %}">
+                                Add Teacher</button>
+                            <button type="button" class="btn btn-dark">
+                                Bulk Addition</button>
+                        </div>
+                        <div class="col-6">
+                            <form action="">
+                            <div class="input-group mb-3">
+                                    <input type="text" class="form-control" 
+                                        placeholder="Search by lastname or subject...">
+                                    <button class="btn btn-outline-primary" 
+                                        type="button" id="button-addon2">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            <div class="col-12 pt-3">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Teachers</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for teacher in teachers %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{teacher}}</td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+    $('.add-teacher').on('click',function(){
+        window.location.href = $(this).data('action')
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}Subject{% endblock %}
+{% block content %}
+<section class="bg-light" style="height: 100vh;">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+            <div class="col-12">
+                <h2 class="text-center text-black font-alt mb-4">List Of Subjects</h2>
+            </div>
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for subject in subjects %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{subject}}</td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
