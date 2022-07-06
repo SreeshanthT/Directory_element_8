@@ -1,11 +1,10 @@
-from audioop import reverse
-from gettext import install
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render,redirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
 
 from teacher_directory_user.forms import CreateUserForm,LoginForm,TeacherForm
 from teacher_directory_user.models import School,Subject,Teacher
@@ -70,9 +69,11 @@ def manage_teachers(request,*args,**kwargs):
                 messages.success(request,f"{teacher_data} updated successfully")
             else:
                 messages.success(request,f"{teacher_data} added successfully")
-            return redirect(reverse('teachers',args=[kwargs.get('slug')]))
+            
+            return redirect(reverse('teachers',args=[school.slug]))
         else:
             form = TeacherForm(initial=request.POST)
+            messages.error(request,f"{teacher_data} added successfully")
             return render(request,'manage_teacher.html',locals())
 
     return render(request,'manage_teacher.html',locals())
