@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 
-from teacher_directory_user.models import Teacher
+from teacher_directory_user.models import Teacher,School,Subject
 
 class CreateUserForm(UserCreationForm):
 
@@ -50,3 +50,34 @@ class TeacherForm(forms.ModelForm):
         fields = ['first_name','last_name','profile_pic',
             'email','phone','number_room','number','subject','taught'
         ]
+
+    def clean_subject(self):
+        cleaned_data = super().clean()
+        if cleaned_data.get('subject').count() > 5:
+            raise forms.ValidationError('You have to choose 5 subjects for each teachers')
+
+class SchoolForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SchoolForm,self).__init__(*args, **kwargs)
+
+        for name in self.fields.keys():
+            self.fields[name].widget.attrs.update({
+                'class':'form-control',
+                'placeholder':self.fields[name].label,
+            })
+    class Meta:
+        model = School
+        fields = ['name']
+
+class SubjectForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SubjectForm,self).__init__(*args, **kwargs)
+
+        for name in self.fields.keys():
+            self.fields[name].widget.attrs.update({
+                'class':'form-control',
+                'placeholder':self.fields[name].label,
+            })
+    class Meta:
+        model = Subject
+        fields = ['name']

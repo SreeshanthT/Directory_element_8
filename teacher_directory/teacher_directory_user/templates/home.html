@@ -69,6 +69,19 @@
                 <div class="col-12">
                     <h2 class="text-center text-black font-alt mb-4">List Of Schools</h2>
                 </div>
+
+
+                <div class="card col-12">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-light add-school"
+                                    data-action="{% url 'manage-school' 'add-school' %}">
+                                    Add School</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-12">
                     <table class="table">
                         <thead>
@@ -87,6 +100,9 @@
                                     <button type="button" class="btn btn-outline-primary btn-sm teacher"
                                         data-action="{% url 'teachers' school.slug %}">
                                         Teachers</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm teacher"
+                                        data-action="{% url 'manage-school' school.slug %}">
+                                        Edit</button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -198,6 +214,12 @@
     {% block extra_js %}{% endblock %}
     <script>
         $('.teacher').on('click',function(){
+            window.location.href = $(this).data('action')
+        })
+        
+    </script>
+    <script>
+        $('.add-school').on('click',function(){
             window.location.href = $(this).data('action')
         })
     </script>

@@ -1,0 +1,37 @@
+{% load static user_tag %}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Teachers</th>
+        <th scope="col">Profile Image</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Room No:</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for teacher in teachers %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{teacher}}</td>
+            <td>
+                <img height="30px" width="30px" src="{% if teacher.profile_pic %}{{teacher.profile_pic.url}}{% else %}{{teacher.get_profile_image}}{% endif %}" alt="">
+            </td>
+            <td>{{teacher.email}}</td>
+            <td>{{teacher.phone}}</td>
+            <td>{{teacher.number_room}}</td>
+            <td>
+                <a href="{% url 'view-teacher' school.slug teacher.slug %}"
+                    class="btn btn-outline-primary btn-sm view">
+                    View</a>
+
+                <a href="{% url 'manage-teacher' school.slug teacher.slug %}"
+                    class="btn btn-outline-secondary btn-sm edit">
+                    Edit</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

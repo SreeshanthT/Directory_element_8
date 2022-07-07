@@ -1,8 +1,8 @@
 {% extends 'home.html' %}
-{% load static %}
+{% load static user_tag %}
 {% block title %}Teachers - {{school}}{% endblock %}
 {% block content %}
-<section class="bg-light" style="height: 100vh;">
+<section class="bg-light" style="height:auto">
     <div class="container px-5">
         <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
             <div class="col-12">
@@ -15,50 +15,88 @@
                             <button type="button" class="btn btn-light add-teacher"
                                 data-action="{% url 'manage-teacher' school.slug 'add-teacher' %}">
                                 Add Teacher</button>
-                            <button type="button" class="btn btn-dark">
+                            {% if user.is_authenticated %}
+                            <button type="button" class="btn btn-dark"
+                                data-bs-toggle="modal" data-bs-target="#csvModal">
                                 Bulk Addition</button>
+                            {% else %}
+                            <button type="button" class="btn btn-dark"
+                                data-bs-toggle="modal" data-bs-target="#loginModal">
+                                Bulk Addition</button>
+                            {% endif %}
                         </div>
                         <div class="col-6">
-                            <form action="">
+                            <form action="{% url 'filter-teachers' school.slug %}" id="filter-form">
                             <div class="input-group mb-3">
                                     <input type="text" class="form-control" 
+                                        name="filter_by"
                                         placeholder="Search by lastname or subject...">
                                     <button class="btn btn-outline-primary" 
-                                        type="button" id="button-addon2">Filter</button>
+                                        type="submit" id="button-addon2">Filter</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
               </div>
-            <div class="col-12 pt-3">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Teachers</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for teacher in teachers %}
-                        <tr>
-                            <th scope="row">{{forloop.counter}}</th>
-                            <td>{{teacher}}</td>
-                            <td></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+            <div class="col-12 pt-3" id="table-container">
+                {% include 'teachers_list.html' %}
             </div>
         </div>
     </div>
 </section>
+
+<div class="modal fade " id="csvModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-primary-to-secondary p-4">
+                <h5 class="modal-title font-alt text-white" id="feedbackModalLabel">Upload CSV For Bulk Addition</h5>
+                <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-0 p-4">
+                <form action="{% url 'bulk-addition' school.slug %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                
+                    <div class="form-floating mb-3">
+                        <input type="file" name="get_csv" class="form-control" placeholder="Csv file" required="" id="id_bulk_add">
+                        <label for="name">Upload csv</label>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary rounded-pill btn-lg"
+                            type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js_plug %}
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 {% endblock %}
 {% block extra_js %}
 <script>
+    const getFormValue = (formId="#filter-form")=>{
+        var obj = {}
+        $(formId).serializeArray().map((v,i)=>{
+        obj[v.name] = v.value
+        })
+        return obj
+    }
     $('.add-teacher').on('click',function(){
         window.location.href = $(this).data('action')
+    })
+    $('#filter-form').on('submit',function(e){
+        e.preventDefault()
+        $.ajax($(this).attr('action'),{
+            data:getFormValue(),
+            beforeSend:()=>{$.LoadingOverlay("show")},
+            complete:()=>{$.LoadingOverlay("hide")},
+            success:(r)=>{
+                console.log(r.template)
+                $('#table-container').html(r.template)
+            },
+            error:(e)=>{alert(e)}
+        })
     })
 </script>
 {% endblock %}

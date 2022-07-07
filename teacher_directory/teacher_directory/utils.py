@@ -26,3 +26,7 @@ def get_object_or_none(query, **kwargs):
         return get_object_or_404(query, **kwargs)
     except:
         return None
+
+def listToString(s): 
+    str1 = "" 
+    return (str1.join(s))

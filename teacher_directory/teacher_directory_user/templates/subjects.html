@@ -2,11 +2,22 @@
 {% load static %}
 {% block title %}Subject{% endblock %}
 {% block content %}
-<section class="bg-light" style="height: 100vh;">
+<section class="bg-light" style="height: auto">
     <div class="container px-5">
         <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
             <div class="col-12">
                 <h2 class="text-center text-black font-alt mb-4">List Of Subjects</h2>
+            </div>
+            <div class="card col-12">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-light add-subject"
+                                data-action="{% url 'manage-subjects' 'add-subject' %}">
+                                Add Teacher</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-12">
                 <table class="table">
@@ -22,7 +33,12 @@
                         <tr>
                             <th scope="row">{{forloop.counter}}</th>
                             <td>{{subject}}</td>
-                            <td></td>
+                            <td>
+                                {{subject.slug}}
+                                <button type="button" class="btn btn-outline-secondary btn-sm add-subject"
+                                    data-action="{% url 'manage-subjects' slug=subject.slug %}">
+                                    Edit</button>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -31,4 +47,11 @@
         </div>
     </div>
 </section>
+{% endblock %}
+{% block extra_js %}
+<script>
+    $('.add-subject').on('click',function(){
+        window.location.href = $(this).data('action')
+    })
+</script>
 {% endblock %}

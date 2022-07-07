@@ -1,0 +1,63 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}Teacher - {{teacher}}{% endblock %}
+{% block content %}
+<section class="bg-light" style="height:auto">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+            <div class="col-12">
+                <h2 class="text-center text-black font-alt mb-4">List of details - {{teacher}}</h2>
+            </div>
+            <div class="card col-12 pt-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <img src="{% if teacher.profile_pic %}{{teacher.profile_pic.url}}{% else %}{{teacher.get_profile_image}}{% endif %}" alt="">
+                        </div>
+                        <div class="col-6">
+                            First Name : 
+                        </div>
+                        <div class="col-6">
+                            {{teacher.first_name}}
+                        </div>
+                        <div class="col-6">
+                            Last Name : 
+                        </div>
+                        <div class="col-6">
+                            {{teacher.last_name}}
+                        </div>
+                        <div class="col-6">
+                            Email : 
+                        </div>
+                        <div class="col-6">
+                            {{teacher.email}}
+                        </div>
+                        <div class="col-6">
+                            Phone : 
+                        </div>
+                        <div class="col-6">
+                            {{teacher.phone}}
+                        </div>
+                        <div class="col-6">
+                            Room No : 
+                        </div>
+                        <div class="col-6">
+                            {{teacher.number_room}}
+                        </div>
+                        <div class="col-6">
+                            Subjects : 
+                        </div>
+                        <div class="col-6">
+                            <ol>
+                                {% for i in teacher.subject.all %}
+                                <li>{{i}}</li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
