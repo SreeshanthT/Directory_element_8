@@ -135,7 +135,7 @@ def manage_school(request,*args,**kwargs):
             else:
                 messages.success(request,f"{school_data} added successfully")
             
-            return redirect('subjects')
+            return redirect('home')
         else:
             data = {Key : listToString(value) for (Key, value) in dict(request.POST).items()}
             form = SchoolForm(initial=data)

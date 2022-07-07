@@ -11,44 +11,44 @@
             <div class="card col-12 pt-3">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 text-center">
+                        <div class="col-12 text-center" >
                             <img src="{% if teacher.profile_pic %}{{teacher.profile_pic.url}}{% else %}{{teacher.get_profile_image}}{% endif %}" alt="">
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3" style="background-color:gray;box-shadow: 10px 10px 5px #aaaaaa;">
                             First Name : 
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3" style="background-color:gray;box-shadow: 10px 10px 5px #aaaaaa;">
                             {{teacher.first_name}}
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3">
                             Last Name : 
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3">
                             {{teacher.last_name}}
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3" style="background-color:gray;box-shadow: 10px 10px 5px #aaaaaa;">
                             Email : 
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3" style="background-color:gray;box-shadow: 10px 10px 5px #aaaaaa;">
                             {{teacher.email}}
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3">
                             Phone : 
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3">
                             {{teacher.phone}}
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3" style="background-color:gray;box-shadow: 10px 10px 5px #aaaaaa;">
                             Room No : 
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3" style="background-color:gray;box-shadow: 10px 10px 5px #aaaaaa;">
                             {{teacher.number_room}}
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 p-3">
                             Subjects : 
                         </div>
-                        <div class="col-6">
-                            <ol>
+                        <div class="col-6 p-3">
+                            <ol class="p-1">
                                 {% for i in teacher.subject.all %}
                                 <li>{{i}}</li>
                                 {% endfor %}
